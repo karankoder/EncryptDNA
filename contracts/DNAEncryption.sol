@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.17;
 
 import "fhevm/lib/TFHE.sol";
 import { SepoliaZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
@@ -89,18 +89,62 @@ contract DNAEncryption is SepoliaZamaFHEVMConfig {
 
     
 
-    /// @notice Encrypts an integer and returns the encrypted value
-    /// @param plaintext The integer to encrypt
-    /// @return encryptedValue The encrypted equivalent of the integer
-    function encryptInteger(uint64 plaintext) public returns (euint64 encryptedValue) {
-        require(plaintext > 0, "Input must be greater than 0"); // Debugging check
-        encryptedValue = TFHE.asEuint64(plaintext); // Encrypt the input
-        TFHE.allowThis(encryptedValue); // Register the encrypted value
-        TFHE.allow(encryptedValue, msg.sender);
-        // Emit the IntegerEncrypted event
-        emit IntegerEncrypted(msg.sender, plaintext, encryptedValue);
-        return encryptedValue;
+    /// @notice Encrypts multiple gene values and returns their encrypted equivalents
+    /// @param gene1 The first gene value to encrypt
+    /// @param gene2 The second gene value to encrypt
+    /// @param gene3 The third gene value to encrypt
+    /// @param gene4 The fourth gene value to encrypt
+    /// @param gene5 The fifth gene value to encrypt
+    /// @param gene6 The sixth gene value to encrypt
+    /// @param gene7 The seventh gene value to encrypt
+    /// @param gene8 The eighth gene value to encrypt
+    /// @param gene9 The ninth gene value to encrypt
+    /// @param gene10 The tenth gene value to encrypt
+    /// @param gene11 The eleventh gene value to encrypt
+    /// @param gene12 The twelfth gene value to encrypt
+    /// @return encryptedGenes An array of encrypted values for the provided genes
+    function encryptGene(
+        uint64 gene1,
+        uint64 gene2,
+        uint64 gene3,
+        uint64 gene4,
+        uint64 gene5,
+        uint64 gene6,
+        uint64 gene7,
+        uint64 gene8,
+        uint64 gene9,
+        uint64 gene10,
+        uint64 gene11,
+        uint64 gene12
+    ) public returns (euint64[12] memory encryptedGenes) {
+        // Encrypt each gene and store in the encryptedGenes array
+        encryptedGenes[0] = encryptAndRegister(gene1);
+        encryptedGenes[1] = encryptAndRegister(gene2);
+        encryptedGenes[2] = encryptAndRegister(gene3);
+        encryptedGenes[3] = encryptAndRegister(gene4);
+        encryptedGenes[4] = encryptAndRegister(gene5);
+        encryptedGenes[5] = encryptAndRegister(gene6);
+        encryptedGenes[6] = encryptAndRegister(gene7);
+        encryptedGenes[7] = encryptAndRegister(gene8);
+        encryptedGenes[8] = encryptAndRegister(gene9);
+        encryptedGenes[9] = encryptAndRegister(gene10);
+        encryptedGenes[10] = encryptAndRegister(gene11);
+        encryptedGenes[11] = encryptAndRegister(gene12);
+
+        return encryptedGenes;
     }
+
+    /// @notice Helper function to encrypt and register a single gene
+    /// @param gene The gene value to encrypt
+    /// @return encryptedGene The encrypted equivalent of the gene
+    function encryptAndRegister(uint64 gene) internal returns (euint64 encryptedGene) {
+        require(gene > 0, "Gene value must be greater than 0"); // Ensure input is valid
+        encryptedGene = TFHE.asEuint64(gene); // Encrypt the gene value
+        TFHE.allowThis(encryptedGene); // Allow contract access
+        TFHE.allow(encryptedGene, msg.sender); // Allow msg.sender access
+        return encryptedGene;
+    }
+
     
 
     /// @notice Compares two encrypted values and emits the results
