@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import Footer from '../components/Footer';
+import { FaTrashAlt } from 'react-icons/fa';
 
 const UploadDNA = () => {
-    const [uploadProgress, setUploadProgress] = useState(0);
     const [file, setFile] = useState(null);
 
     const checkThrombophiliaRisk = (data) => {
@@ -73,108 +74,79 @@ const UploadDNA = () => {
             };
             reader.readAsText(uploadedFile);
         }
+    };
 
-        const interval = setInterval(() => {
-            setUploadProgress((prevProgress) => {
-                if (prevProgress >= 100) {
-                    clearInterval(interval);
-                    return 100;
-                }
-                return prevProgress + 10;
-            });
-        }, 200);
+    const handleDeleteFile = () => {
+        setFile(null);
     };
 
     return (
         <div>
-            {/* Upload DNA Section */}
-            <div
-                style={{ background: '#F1FAEE', padding: '2rem', textAlign: 'center' }}
-            >
-                <h1>Upload Your Raw Genomic Data</h1>
+            <div className="bg-[#F1FAEE] p-8 text-center">
+                <h1 className='text-2xl'>Upload Your Raw Genomic Data</h1>
                 <p>
                     We accept files from 23andMe and other personal genomics services.
                     Your data will remain encrypted and private.
                 </p>
                 <div
-                    style={{
-                        border: '2px dashed #ccc',
-                        padding: '2rem',
-                        margin: '2rem auto',
-                        maxWidth: '500px',
-                        position: 'relative',
-                        cursor: 'pointer',
-                    }}
+                    className="border-2 border-dashed border-gray-300 p-8 my-8 mx-auto max-w-lg relative cursor-pointer"
                     onClick={() => document.getElementById('fileInput')?.click()}
                 >
-                    <div style={{ fontSize: '4rem', animation: 'pulse 2s infinite' }}>
+                    <div className="text-6xl">
                         📤
                     </div>
                     <p>Drag and drop your file here or Click to Browse</p>
-                    <p style={{ color: '#888' }}>Supported formats: .txt, .zip, .json</p>
+                    <p className="text-gray-500">Supported formats: .txt, .zip, .json</p>
                     <input
                         id='fileInput'
                         type='file'
-                        style={{ display: 'none' }}
+                        accept=".txt,.json,.zip"
+                        className="hidden"
                         onChange={handleFileUpload}
                     />
                 </div>
                 {file && (
-                    <div style={{ width: '100%', marginTop: '1rem' }}>
-                        <progress
-                            value={uploadProgress}
-                            max='100'
-                            style={{ width: '100%' }}
-                        />
-                        <p style={{ color: '#888' }}>{uploadProgress}%</p>
+                    <div className="mt-4 text-gray-800 flex justify-center items-center">
+                        <strong>Selected file:</strong> {file.name}
+                        <FaTrashAlt className="ml-2 text-red-500 cursor-pointer" onClick={handleDeleteFile} />
                     </div>
                 )}
+                <p className="text-gray-500 mt-4">
+                    Don’t have your own 23andMe data? Use this <a href="https://my.pgp-hms.org/public_genetic_data?utf8=%E2%9C%93&data_type=23andMe&commit=Search"
+                        target="_blank" rel="noreferrer"
+                        className="text-blue-500 underline">link</a> to find example datasets.
+                </p>
                 <button
-                    style={{
-                        backgroundColor: '#FF6F61',
-                        color: '#fff',
-                        padding: '0.5rem 1rem',
-                        border: 'none',
-                        cursor: 'pointer',
-                        marginTop: '1rem',
-                    }}
+                    className={`mt-4 py-2 px-4 text-white border-none ${file ? 'bg-[#FF6F61] cursor-pointer' : 'bg-gray-300 cursor-not-allowed'}`}
+                    disabled={!file}
                 >
                     Upload and Encrypt
                 </button>
             </div>
 
-            {/* Security Assurance Section */}
-            <div
-                style={{ background: '#A8DADC', padding: '2rem', textAlign: 'center' }}
-            >
-                <div style={{ fontSize: '4rem' }}>🔒</div>
-                <h2>Your Privacy is Our Priority</h2>
-                <p>
+            <div className="h-[400px] bg-[#A8DADC] p-12 text-center">
+                <div className="text-6xl mb-4">🔒</div>
+                <h2 className="text-3xl font-semibold mb-4">Your Privacy is Our Priority</h2>
+                <p className="text-lg mb-8">
                     Your genomic data is encrypted during upload and securely stored. Only
                     you have access to the results.
                 </p>
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginTop: '2rem',
-                    }}
-                >
-                    <div style={{ textAlign: 'center', margin: '0 1rem' }}>
-                        <h6>Upload</h6>
-                        <p>Your data is uploaded securely.</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="text-center">
+                        <h6 className="text-xl font-medium">Upload</h6>
+                        <p className="text-gray-700">Your data is uploaded securely.</p>
                     </div>
-                    <div style={{ textAlign: 'center', margin: '0 1rem' }}>
-                        <h6>Encrypt</h6>
-                        <p>Your data is encrypted during the upload process.</p>
+                    <div className="text-center">
+                        <h6 className="text-xl font-medium">Encrypt</h6>
+                        <p className="text-gray-700">Your data is encrypted during the upload process.</p>
                     </div>
-                    <div style={{ textAlign: 'center', margin: '0 1rem' }}>
-                        <h6>Insights</h6>
-                        <p>Only you have access to the insights.</p>
+                    <div className="text-center">
+                        <h6 className="text-xl font-medium">Insights</h6>
+                        <p className="text-gray-700">Only you have access to the insights.</p>
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
