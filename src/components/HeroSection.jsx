@@ -1,8 +1,9 @@
 import React from 'react'
 import heroBackground from '../assets/hero.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function HeroSection() {
+    const navigate = useNavigate();
     return (
         <section
             className='text-center py-20 bg-[#f9f9f9]'
@@ -23,13 +24,16 @@ export default function HeroSection() {
                     secure.
                 </p>
                 <div>
-                    <Link
-                        to='/upload'
+                    <button
                         className='bg-[#ff9f43] text-white py-2 px-4 rounded mr-4 hover:bg-[#ff7b00] transition-transform transform  active:scale-95'
+                        onClick={() => navigate('/upload')}
                     >
                         Upload Your DNA
-                    </Link>
-                    <button className='bg-[#FDCB57] text-black py-2 px-4 rounded transition-transform transform  active:scale-95'>
+                    </button>
+                    <button
+                        className='bg-[#FDCB57] text-black py-2 px-4 rounded transition-transform transform  active:scale-95'
+                        onClick={() => navigate('/results')}
+                    >
                         View Result
                     </button>
                 </div>
