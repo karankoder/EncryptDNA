@@ -41,7 +41,7 @@ export default function Home() {
                     </p>
                     <div>
                         <Link
-                            to='/create'
+                            to='/upload'
                             className='bg-[#FF6F61] text-white py-2 px-4 rounded mr-4'
                         >
                             Upload Your DNA
