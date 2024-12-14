@@ -72,6 +72,7 @@ contract DNAEncryption is SepoliaZamaFHEVMConfig {
 
         // Register the adjusted risk to allow further operations
         TFHE.allowThis(encryptedAdjustedRisk);
+        TFHE.allow(encryptedAdjustedRisk, msg.sender);
 
         emit GeneticInsightProcessed(msg.sender, encryptedAdjustedRisk);
 
@@ -95,6 +96,7 @@ contract DNAEncryption is SepoliaZamaFHEVMConfig {
         require(plaintext > 0, "Input must be greater than 0"); // Debugging check
         encryptedValue = TFHE.asEuint64(plaintext); // Encrypt the input
         TFHE.allowThis(encryptedValue); // Register the encrypted value
+        TFHE.allow(encryptedValue, msg.sender);
         // Emit the IntegerEncrypted event
         emit IntegerEncrypted(msg.sender, plaintext, encryptedValue);
         return encryptedValue;
@@ -116,7 +118,9 @@ contract DNAEncryption is SepoliaZamaFHEVMConfig {
 
         // Allow usage of the encrypted results
         TFHE.allowThis(isEqual);
+        TFHE.allow(isEqual, msg.sender);
         TFHE.allowThis(isGreater);
+        TFHE.allow(isGreater, msg.sender);
 
         // Emit the comparison results
         emit EncryptedValuesCompared(msg.sender, value1, value2, isEqual, isGreater);
