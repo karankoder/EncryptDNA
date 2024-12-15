@@ -4,6 +4,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 import Navbar from '../components/Navbar';
 import PrivacySection from '../components/PrivacySection';
 import { ethers } from 'ethers';
+import Chatbot from '../components/Chatbot';
 const Results = () => {
     const [file, setFile] = useState(null);
     const [infectionChance, setInfectionChance] = useState(null);
@@ -382,6 +383,7 @@ const Results = () => {
             </div>
             <PrivacySection />
             <Footer />
+            <Chatbot />
         </div>
     );
 };

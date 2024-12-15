@@ -7,6 +7,7 @@ import contractABI from '../utils/contractABI';
 
 import Navbar from '../components/Navbar';
 import PrivacySection from '../components/PrivacySection';
+import Chatbot from '../components/Chatbot';
 
 const UploadDNA = () => {
     const [{ wallet }] = useConnectWallet();
@@ -227,6 +228,7 @@ const UploadDNA = () => {
             </div>
             <PrivacySection />
             <Footer />
+            <Chatbot />
         </div>
     );
 };
