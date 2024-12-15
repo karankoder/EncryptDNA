@@ -47,7 +47,7 @@ const UploadDNA = () => {
 
 
     const checkThrombophiliaRisk = (data) => {
-        
+
 
         const { Zama_data } = data;
         const riskFactors = [];
@@ -111,29 +111,29 @@ const UploadDNA = () => {
                 genotypeData[rsid] = genotype.trim();
             });
 
-                const targetKeys = ["rs10811661", "rs1111875", "rs13266634", "rs1801282"];
-                console.log('Target keys:', targetKeys);
-                const ZamaData = {};
-                const genes=[];
-                targetKeys.forEach(key => {
-                    console.log(genotypeData[key]);
-                    genes.push(geneCombinations[genotypeData[key]]);
-                });
-                const tx=await Maincontract.encryptGene(1,5,5,5);
-                await tx.wait();
-                const encryptedGene = await contract.get_genes();
-                console.log("Encrypted Gene Value:", encryptedGene);
-                let indx=0;
-                targetKeys.forEach(key => {
-                    ZamaData[key]=encryptedGene[indx].toString();
-                    indx++;
-                });
-                const finalJson = {
-                    passport_id: import.meta.env.VITE_APP_PASSWORD_ID,
-                    filename_hash: import.meta.env.VITE_APP_FILENAME_HASH,
-                    data_hash: import.meta.env.VITE_APP_DATA_HASH,
-                    Zama_data: ZamaData
-                };
+            const targetKeys = ["rs10811661", "rs1111875", "rs13266634", "rs1801282"];
+            console.log('Target keys:', targetKeys);
+            const ZamaData = {};
+            const genes = [];
+            targetKeys.forEach(key => {
+                console.log(genotypeData[key]);
+                genes.push(geneCombinations[genotypeData[key]]);
+            });
+            const tx = await Maincontract.encryptGene(1, 5, 5, 5);
+            await tx.wait();
+            const encryptedGene = await contract.get_genes();
+            console.log("Encrypted Gene Value:", encryptedGene);
+            let indx = 0;
+            targetKeys.forEach(key => {
+                ZamaData[key] = encryptedGene[indx].toString();
+                indx++;
+            });
+            const finalJson = {
+                passport_id: import.meta.env.VITE_APP_PASSWORD_ID,
+                filename_hash: import.meta.env.VITE_APP_FILENAME_HASH,
+                data_hash: import.meta.env.VITE_APP_DATA_HASH,
+                Zama_data: ZamaData
+            };
 
             console.log('Final JSON:', JSON.stringify(finalJson, null, 2));
             setPassportInfo(finalJson);
@@ -151,68 +151,77 @@ const UploadDNA = () => {
         <div>
             <Navbar />
             <div className="bg-[#F1FAEE] p-8 text-center">
-                <h1 className='text-2xl'>Upload Your Raw Genomic Data</h1>
-                <p>
-                    We accept files from 23andMe and other personal genomics services.
-                    Your data will remain encrypted and private.
-                </p>
-                <div
-                    className="border-2 border-dashed border-gray-300 p-8 my-8 mx-auto max-w-lg relative cursor-pointer"
-                    onClick={() => document.getElementById('fileInput')?.click()}
-                >
-                    <div className="text-6xl">
-                        📤
-                    </div>
-                    <p>Drag and drop your file here or Click to Browse</p>
-                    <p className="text-gray-500">Supported formats: .txt</p>
-                    <input
-                        id='fileInput'
-                        type='file'
-                        accept=".txt"
-                        className="hidden"
-                        onChange={handleFileUpload}
-                    />
-                </div>
-                {file && (
-                    <div className="mt-4 text-gray-800 flex justify-center items-center">
-                        <strong>Selected file:</strong> {file.name}
-                        <FaTrashAlt className="ml-2 text-red-500 cursor-pointer" onClick={handleDeleteFile} />
-                    </div>
-                )}
-                <p className="text-gray-500 mt-4">
-                    Don't have your own 23andMe data? Use this <a href="https://my.pgp-hms.org/public_genetic_data?utf8=%E2%9C%93&data_type=23andMe&commit=Search"
-                        target="_blank" rel="noreferrer"
-                        className="text-blue-500 underline">link</a> to find example datasets.
-                </p>
-                <button
-                    className={`mt-4 py-2 px-4 text-white border-none ${file ? 'bg-[#FF6F61] cursor-pointer' : 'bg-gray-300 cursor-not-allowed'}`}
-                    disabled={!file || loading}
-                    onClick={!loading ? handleSubmit : null}
-                >
-                    {loading ? (
-                        <div className="loader"></div>
-                    ) : (
-                        'Upload and Encrypt'
-                    )}
-                </button>
-                {passportInfo && (
-                    <div className="mt-8 p-4 bg-white border rounded shadow-md">
-                        <h2 className="text-xl font-bold">Your DNA Passport</h2>
-                        <p>monadicdna_{passportInfo.filename_hash}.JSON</p>
-                        <p>Your genomic data is now encrypted with your passport!</p>
-                        <p>Your DNA passport includes:</p>
-                        <ul className="list-disc list-inside">
+                {!passportInfo ? (
+                    <>
+                        <h1 className='text-2xl'>Upload Your Raw Genomic Data</h1>
+                        <p>
+                            We accept files from 23andMe and other personal genomics services.
+                            Your data will remain encrypted and private.
+                        </p>
+                        <div
+                            className="border-2 border-dashed border-gray-300 p-8 my-8 mx-auto max-w-lg relative cursor-pointer"
+                            onClick={() => document.getElementById('fileInput')?.click()}
+                        >
+                            <div className="text-6xl">
+                                📤
+                            </div>
+                            <p>Drag and drop your file here or Click to Browse</p>
+                            <p className="text-gray-500">Supported formats: .txt</p>
+                            <input
+                                id='fileInput'
+                                type='file'
+                                accept=".txt"
+                                className="hidden"
+                                onChange={handleFileUpload}
+                            />
+                        </div>
+                        {file && (
+                            <div className="mt-4 text-gray-800 flex justify-center items-center">
+                                <strong>Selected file:</strong> {file.name}
+                                <FaTrashAlt className="ml-2 text-red-500 cursor-pointer" onClick={handleDeleteFile} />
+                            </div>
+                        )}
+                        <p className="text-gray-500 mt-4">
+                            Don't have your own 23andMe data? Use this <a href="https://my.pgp-hms.org/public_genetic_data?utf8=%E2%9C%93&data_type=23andMe&commit=Search"
+                                target="_blank" rel="noreferrer"
+                                className="text-blue-500 underline">link</a> to find example datasets.
+                        </p>
+                        <button
+                            className={`mt-4 py-2 px-4 text-white border-none ${file ? 'bg-[#FF6F61] cursor-pointer' : 'bg-gray-300 cursor-not-allowed'}`}
+                            disabled={!file || loading}
+                            onClick={!loading ? handleSubmit : null}
+                            style={{ width: '200px', height: '50px' }}
+                        >
+                            {loading ? (
+                                <div className="loader"></div>
+                            ) : (
+                                'Upload and Encrypt'
+                            )}
+                        </button>
+                    </>
+                ) : (
+                    <div className="mt-8 p-6 bg-[#F1FAEE] border rounded-lg shadow-lg text-left max-w-lg mx-auto">
+                        <h2 className="text-2xl font-bold text-[#1D3557] mb-4">Your DNA Passport</h2>
+                        <p className="text-lg text-[#457B9D] mb-2">encryptdna_{passportInfo.filename_hash}.JSON</p>
+                        <p className="text-md text-[#1D3557] mb-4">Your genomic data is now encrypted with your passport!</p>
+                        <p className="text-md text-[#1D3557] mb-2">Your DNA passport includes:</p>
+                        <ul className="list-disc list-inside text-md text-[#1D3557] mb-4">
                             <li>A unique ID</li>
                             <li>Information that lets providers validate your data</li>
-                            <li>Names for encrypted items we have stored on the Nillion network for you</li>
                         </ul>
                         <a
                             href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(passportInfo, null, 2))}`}
-                            download={`monadicdna_${passportInfo.filename_hash}.json`}
-                            className="mt-4 inline-block py-2 px-4 bg-blue-500 text-white rounded"
+                            download={`encryptdna_${passportInfo.filename_hash}.json`}
+                            className="mt-4 inline-block py-2 px-4 bg-[#FF6F61] text-white rounded hover:bg-[#E63946] transition-colors duration-300"
                         >
                             Download JSON
                         </a>
+                        <button
+                            className="mt-4 ml-4 py-2 px-4 bg-[#457B9D] text-white rounded hover:bg-[#1D3557] transition-colors duration-300"
+                            onClick={() => setPassportInfo(null)}
+                        >
+                            Submit Another DNA
+                        </button>
                     </div>
                 )}
             </div>
