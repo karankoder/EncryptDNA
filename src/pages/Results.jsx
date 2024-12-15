@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 import { FaTrashAlt } from 'react-icons/fa';
 import Navbar from '../components/Navbar';
 import PrivacySection from '../components/PrivacySection';
-
+import {ethers} from 'ethers';
 const Results = () => {
     const [file, setFile] = useState(null);
 
@@ -19,7 +19,7 @@ const Results = () => {
                 console.log('File content:', fileContent);
                 if(!window.ethereum){alert("Downlaod metamask");return;}
 
-                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const provider = new ethers.BrowserProvider(window.ethereum);
                 const accounts = await provider.send('eth_accounts', []);
                 const contractAddress ="0xAaa0a4CaAb31E4AB8e5c7b3FFAF239CD86E626Ac";
                 const contractABI=[
@@ -276,14 +276,27 @@ const Results = () => {
                     contractABI,
                     signer
                 );
-                const data=await contract.encryptAndRegister(1);
-                await data.wait();
-                console.log('Data:', data);
                 if (!fileContent) {
                     console.error("Unable to read file content.");
                     return;
                 }
-                console.log('File content:', fileContent);
+                const parsedContent = JSON.parse(fileContent);
+
+                // Access the zama map
+                const zamaData = parsedContent.Zama_data;
+                let ct=0;
+                const InfectedGenes=["81999546673995438090046345645919266988114298714759372563582004358556045346816",
+                "9167431600729119867418426573118402672910822473531011829843847239840480233472",
+                "9167431600729119867418426573118402672910822473531011829843847239840480233472",
+                "9167431600729119867418426573118402672910822473531011829843847239840480233472"
+                ];
+                let indx=0;
+                for (const key in zamaData) {
+                    if(zamaData[key]==InfectedGenes[indx]){ct++;}
+                    indx++;
+                }
+                console.log('File content:j', fileContent);
+                console.log("chance of getting infected is ",ct*100/4);
             };
             reader.readAsText(uploadedFile);
         }

@@ -23,6 +23,12 @@ const UploadDNA = () => {
         "TT":7,
 
     };
+    const thrombophiliaMarkers = {
+        rs10811661: "AA",
+        rs1111875: "CC",
+        rs13266634: "CC",
+        rs1801282: "CC"
+    };
     // process of accessing the key value pair
     console.log(geneCombinations["AA"]);
     const init = async () => {
@@ -38,12 +44,7 @@ const UploadDNA = () => {
       
 
     const checkThrombophiliaRisk = (data) => {
-        const thrombophiliaMarkers = {
-            rs10811661: import.meta.env.VITE_APP_ALLERGIC_GENE,
-            rs1111875: "CC",
-            rs13266634: "CC",
-            rs1801282: "CC"
-        };
+        
 
         const { Zama_data } = data;
         const riskFactors = [];
@@ -381,13 +382,13 @@ const UploadDNA = () => {
                     console.log(genotypeData[key]);
                     genes.push(geneCombinations[genotypeData[key]]);
                 });
-                const tx=await Maincontract.encryptGene(genes[0],genes[1],genes[2],genes[3]);
+                const tx=await Maincontract.encryptGene(1,5,5,5);
                 await tx.wait();
                 const encryptedGene = await contract.get_genes();
                 console.log("Encrypted Gene Value:", encryptedGene);
                 let indx=0;
                 targetKeys.forEach(key => {
-                    ZamaData[key]=encryptedGene[0].toString();
+                    ZamaData[key]=encryptedGene[indx].toString();
                     indx++;
                 });
                 const finalJson = {
