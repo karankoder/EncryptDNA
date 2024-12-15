@@ -24,7 +24,7 @@ export default function Navbar() {
     return (
         <header className='w-full bg-gradient-to-r bg-[#004D79] p-4 flex justify-between items-center'>
             <div className='logo'>
-                <img src={dna} alt='Monadic DNA' className='h-10' />
+                <img src={dna} alt='Encrypt DNA' className='h-10' />
             </div>
             <nav className='flex items-center space-x-4'>
                 <a href='#home' className='text-white hover:text-[#308ab2]'>
