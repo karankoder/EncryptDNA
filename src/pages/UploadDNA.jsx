@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import Footer from '../components/Footer';
 import { FaTrashAlt } from 'react-icons/fa';
+import { ethers } from 'ethers';
+import { useConnectWallet } from '@web3-onboard/react';
+
 
 const UploadDNA = () => {
+    const [{ wallet }] = useConnectWallet();
     const [file, setFile] = useState(null);
     console.log(import.meta.env.VITE_APP_ALLERGIC_GENE);
 
@@ -37,22 +41,28 @@ const UploadDNA = () => {
             : "The user does not show significant genetic markers associated with a higher risk of Thrombophilia.";
     };
 
-    const handleFileUpload = (event) => {
+    const handleFileUpload = async (event) => {
         const uploadedFile = event.target.files?.[0] || null;
         setFile(uploadedFile);
 
         if (uploadedFile) {
             console.log('Uploaded file:', uploadedFile);
             const reader = new FileReader();
-            reader.onload = (e) => {
+            reader.onload = async (e) => {
+                if(!window.ethereum){alert("Please install metamask extension to proceed further"); return;}
+                
                 const fileContent = e.target?.result;
                 console.log('File content:', fileContent);
                 if (!fileContent) {
                     console.error("Unable to read file content.");
                     return;
                 }
-
+                const userAddress= wallet?.accounts[0].address || '';
+                const contractAddress="0x07E8bD80C228CF5812E20Bfe8223485c53B0BD44";
+                
+                console.log('User Address:', userAddress);
                 console.log('File content:', fileContent);
+                
 
                 const lines = fileContent.trim().split('\n');
                 const dataLines = lines.filter(line => !line.startsWith('#'));
@@ -62,16 +72,31 @@ const UploadDNA = () => {
                     genotypeData[rsid] = genotype.trim();
                 });
 
-                const targetKeys = [
-                    "rs10811661", "rs1111875", "rs13266634", "rs1801282",
-                    "rs1815739", "rs4402960", "rs5219", "rs6025",
-                    "rs7754840", "rs7903146", "rs8050136", "rs9300039"
-                ];
-
+                const targetKeys = ["rs10811661", "rs1111875", "rs13266634", "rs1801282","rs1815739", "rs4402960", "rs5219", "rs6025","rs7754840", "rs7903146", "rs8050136", "rs9300039"];
+                console.log('Target keys:', targetKeys);
                 const ZamaData = {};
-                targetKeys.forEach(key => {
-                    ZamaData[key] = genotypeData[key] || "--";
-                });
+                // const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+                // // Request account access if needed
+                // await provider.send("eth_requestAccounts", []);
+
+                // // Get signer from MetaMask
+                // const signer = provider.getSigner();
+
+                // // Create FHEVM instance
+                // const fhevmInstance = await createInstance(signer);
+                // const input = instance.createEncryptedInput(contractAddress, userAddress);
+
+                // targetKeys.forEach(key => {
+                //     input.add256(geneCombinations[genotypeData[key]]) 
+                // });
+                // const inputs=await input.encrpyt();
+                // targetKeys.forEach(key => {
+                //     ZamaData[key]=inputs.handles[0];
+                // });
+
+
+                
 
                 const finalJson = {
                     passport_id: "monadicdna_b65e442fcc0026ad8aeeb3ea6a779023_542916",
