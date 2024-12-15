@@ -5,6 +5,7 @@ import Features from '../components/Features';
 import HowItWorks from '../components/HowItWorks';
 import CurrentChallenges from '../components/CurrentChallenges';
 import OurAlternatives from '../components/OurAlternatives';
+import Chatbot from '../components/Chatbot';
 
 export default function Home() {
     return (
@@ -16,6 +17,7 @@ export default function Home() {
             <CurrentChallenges />
             <OurAlternatives />
             <Footer />
+            <Chatbot />
         </div>
     );
 }
