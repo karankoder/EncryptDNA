@@ -17,7 +17,7 @@ The project uses actual dumps of genetic data from **23andMe**. Other providersâ
 As mentioned, we used **FHEVM** for confidential computing. As FHEVM is still being scaled, we kept things as simple as possible and only stored selected SNPs on the network for computation. The moment the constraint is removed, we will be able to run a plethora of programs on the secret data.
 
 ## Smart Contract Testing
-You can visit the [Github repository](https://github.com/Jineshbansal/DNAEncryptionTesting). I have written extensive tests to minimize the risk of application breakdown and to ensure the smart contract logic functions as intended. I have written the tests in typescript.
+You can visit the [Github repository](https://github.com/Jineshbansal/DNAEncryptionTesting). I have written extensive tests to minimize the risk of application breakdown and to ensure the smart contract logic functions as intended. I have written the tests in typescript under the file name test1.ts .
 
 ## Demo Video Link
 Click [here](https://www.loom.com/share/e72588920a51498ea3d93e2a1dd77cce?sid=170f410b-ef2e-4339-93e8-bc582c77cb9b) to see a working demo!
