@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Footer from '../components/Footer';
 import { FaTrashAlt } from 'react-icons/fa';
+import Navbar from '../components/Navbar';
+import PrivacySection from '../components/PrivacySection';
 
 const UploadDNA = () => {
     const [file, setFile] = useState(null);
@@ -92,6 +94,7 @@ const UploadDNA = () => {
 
     return (
         <div>
+            <Navbar />
             <div className="bg-[#F1FAEE] p-8 text-center">
                 <h1 className='text-2xl'>Upload Your Raw Genomic Data</h1>
                 <p>
@@ -133,29 +136,7 @@ const UploadDNA = () => {
                     Upload and Encrypt
                 </button>
             </div>
-
-            <div className="h-[400px] bg-[#A8DADC] p-12 text-center">
-                <div className="text-6xl mb-4">🔒</div>
-                <h2 className="text-3xl font-semibold mb-4">Your Privacy is Our Priority</h2>
-                <p className="text-lg mb-8">
-                    Your genomic data is encrypted during upload and securely stored. Only
-                    you have access to the results.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="text-center">
-                        <h6 className="text-xl font-medium">Upload</h6>
-                        <p className="text-gray-700">Your data is uploaded securely.</p>
-                    </div>
-                    <div className="text-center">
-                        <h6 className="text-xl font-medium">Encrypt</h6>
-                        <p className="text-gray-700">Your data is encrypted during the upload process.</p>
-                    </div>
-                    <div className="text-center">
-                        <h6 className="text-xl font-medium">Insights</h6>
-                        <p className="text-gray-700">Only you have access to the insights.</p>
-                    </div>
-                </div>
-            </div>
+            <PrivacySection />
             <Footer />
         </div>
     );

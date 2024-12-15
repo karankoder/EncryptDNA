@@ -6,6 +6,7 @@ import coinbaseModule from '@web3-onboard/coinbase';
 import walletConnectModule from '@web3-onboard/walletconnect';
 import injectedModule from '@web3-onboard/injected-wallets';
 
+
 import { http, createConfig } from 'wagmi';
 import { mainnet, sepolia, polygon } from 'wagmi/chains';
 
@@ -51,7 +52,7 @@ export const onboardConfig = {
     ],
     appMetadata: {
         name: 'EncryptDNA',
-        icon: 'graph2.png',
+        icon: '../assets/dna.png',
         description: 'Encrypt your DNA data',
     },
 };
