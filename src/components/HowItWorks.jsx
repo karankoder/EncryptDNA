@@ -51,8 +51,7 @@ export default function HowItWorks() {
                         <div className='flex items-center'>
                             <div className='text-4xl mr-4'>✔️</div>
                             <p>
-                                Use tools like SnipperBot and mtDog to analyze traits
-                                privately.
+                                Get the result of chances of getting a disease from your DNA Passport.
                             </p>
                         </div>
                     </motion.div>
