@@ -9,6 +9,7 @@ import Navbar from '../components/Navbar';
 import PrivacySection from '../components/PrivacySection';
 import Chatbot from '../components/Chatbot';
 
+
 const UploadDNA = () => {
     const [{ wallet }] = useConnectWallet();
     const [file, setFile] = useState(null);
@@ -120,7 +121,7 @@ const UploadDNA = () => {
                 console.log(genotypeData[key]);
                 genes.push(geneCombinations[genotypeData[key]]);
             });
-            const tx = await Maincontract.encryptGene(1, 5, 5, 5);
+            const tx = await Maincontract.encryptGene(genes[0], genes[1], genes[2], genes[3]);
             await tx.wait();
             const encryptedGene = await contract.get_genes();
             console.log("Encrypted Gene Value:", encryptedGene);
