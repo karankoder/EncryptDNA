@@ -9,7 +9,7 @@ import Chatbot from '../components/Chatbot';
 
 export default function Home() {
     return (
-        <div className='container mx-auto'>
+        <div>
             <Navbar />
             <HeroSection />
             <Features />
