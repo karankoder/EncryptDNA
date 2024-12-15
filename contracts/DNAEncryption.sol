@@ -121,10 +121,6 @@ contract DNAEncryption is SepoliaZamaFHEVMConfig {
         return encryptedGene;
     }
 
-    function testing() public pure returns (uint64) {
-        return 1;
-    }
-    
 
     /// @notice Compares two encrypted values and emits the results
     /// @param value1 First encrypted value
