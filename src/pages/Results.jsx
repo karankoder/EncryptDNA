@@ -21,81 +21,12 @@ const Results = () => {
 
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const accounts = await provider.send('eth_accounts', []);
-                const contractAddress ="0x07E8bD80C228CF5812E20Bfe8223485c53B0BD44";
+                const contractAddress ="0xAaa0a4CaAb31E4AB8e5c7b3FFAF239CD86E626Ac";
                 const contractABI=[
                     {
-                        "anonymous": false,
                         "inputs": [
                             {
-                                "indexed": true,
-                                "internalType": "address",
-                                "name": "sender",
-                                "type": "address"
-                            },
-                            {
-                                "indexed": false,
-                                "internalType": "euint256",
-                                "name": "value1",
-                                "type": "uint256"
-                            },
-                            {
-                                "indexed": false,
-                                "internalType": "euint256",
-                                "name": "value2",
-                                "type": "uint256"
-                            },
-                            {
-                                "indexed": false,
-                                "internalType": "ebool",
-                                "name": "isEqual",
-                                "type": "uint256"
-                            },
-                            {
-                                "indexed": false,
-                                "internalType": "ebool",
-                                "name": "isGreater",
-                                "type": "uint256"
-                            }
-                        ],
-                        "name": "EncryptedValuesCompared",
-                        "type": "event"
-                    },
-                    {
-                        "anonymous": false,
-                        "inputs": [
-                            {
-                                "indexed": true,
-                                "internalType": "address",
-                                "name": "user",
-                                "type": "address"
-                            },
-                            {
-                                "indexed": false,
-                                "internalType": "euint256",
-                                "name": "encryptedRisk",
-                                "type": "uint256"
-                            }
-                        ],
-                        "name": "GeneticInsightProcessed",
-                        "type": "event"
-                    },
-                    {
-                        "anonymous": false,
-                        "inputs": [
-                            {
-                                "indexed": true,
-                                "internalType": "address",
-                                "name": "user",
-                                "type": "address"
-                            }
-                        ],
-                        "name": "GenomicDataAdded",
-                        "type": "event"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "euint256",
+                                "internalType": "euint64",
                                 "name": "encryptedTraitRisk",
                                 "type": "uint256"
                             },
@@ -113,12 +44,12 @@ const Results = () => {
                     {
                         "inputs": [
                             {
-                                "internalType": "euint256",
+                                "internalType": "euint64",
                                 "name": "value1",
                                 "type": "uint256"
                             },
                             {
-                                "internalType": "euint256",
+                                "internalType": "euint64",
                                 "name": "value2",
                                 "type": "uint256"
                             }
@@ -142,28 +73,15 @@ const Results = () => {
                     {
                         "inputs": [
                             {
-                                "internalType": "uint256",
+                                "internalType": "uint64",
                                 "name": "gene",
-                                "type": "uint256"
-                            }
-                        ],
-                        "name": "encrypt",
-                        "outputs": [],
-                        "stateMutability": "nonpayable",
-                        "type": "function"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "uint256",
-                                "name": "gene",
-                                "type": "uint256"
+                                "type": "uint64"
                             }
                         ],
                         "name": "encryptAndRegister",
                         "outputs": [
                             {
-                                "internalType": "euint256",
+                                "internalType": "euint64",
                                 "name": "encryptedGene",
                                 "type": "uint256"
                             }
@@ -172,34 +90,147 @@ const Results = () => {
                         "type": "function"
                     },
                     {
+                        "anonymous": false,
                         "inputs": [
                             {
-                                "internalType": "uint256",
+                                "indexed": true,
+                                "internalType": "address",
+                                "name": "sender",
+                                "type": "address"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "euint64",
+                                "name": "value1",
+                                "type": "uint256"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "euint64",
+                                "name": "value2",
+                                "type": "uint256"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "ebool",
+                                "name": "isEqual",
+                                "type": "uint256"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "ebool",
+                                "name": "isGreater",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "EncryptedValuesCompared",
+                        "type": "event"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint64",
                                 "name": "gene1",
-                                "type": "uint256"
+                                "type": "uint64"
                             },
                             {
-                                "internalType": "uint256",
+                                "internalType": "uint64",
                                 "name": "gene2",
-                                "type": "uint256"
+                                "type": "uint64"
                             },
                             {
-                                "internalType": "uint256",
+                                "internalType": "uint64",
                                 "name": "gene3",
-                                "type": "uint256"
+                                "type": "uint64"
                             },
                             {
-                                "internalType": "uint256",
+                                "internalType": "uint64",
                                 "name": "gene4",
-                                "type": "uint256"
+                                "type": "uint64"
                             }
                         ],
                         "name": "encryptGene",
                         "outputs": [
                             {
-                                "internalType": "euint256[4]",
+                                "internalType": "euint64[4]",
                                 "name": "encryptedGenes",
                                 "type": "uint256[4]"
+                            }
+                        ],
+                        "stateMutability": "nonpayable",
+                        "type": "function"
+                    },
+                    {
+                        "anonymous": false,
+                        "inputs": [
+                            {
+                                "indexed": true,
+                                "internalType": "address",
+                                "name": "user",
+                                "type": "address"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "euint64",
+                                "name": "encryptedRisk",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "GeneticInsightProcessed",
+                        "type": "event"
+                    },
+                    {
+                        "anonymous": false,
+                        "inputs": [
+                            {
+                                "indexed": true,
+                                "internalType": "address",
+                                "name": "user",
+                                "type": "address"
+                            }
+                        ],
+                        "name": "GenomicDataAdded",
+                        "type": "event"
+                    },
+                    {
+                        "anonymous": false,
+                        "inputs": [
+                            {
+                                "indexed": true,
+                                "internalType": "address",
+                                "name": "sender",
+                                "type": "address"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "uint64",
+                                "name": "plaintext",
+                                "type": "uint64"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "euint64",
+                                "name": "encryptedValue",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "IntegerEncrypted",
+                        "type": "event"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "euint64",
+                                "name": "multiplier",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "processGeneticInsights",
+                        "outputs": [
+                            {
+                                "internalType": "euint64",
+                                "name": "encryptedAdjustedRisk",
+                                "type": "uint256"
                             }
                         ],
                         "stateMutability": "nonpayable",
@@ -210,7 +241,7 @@ const Results = () => {
                         "name": "getGenomicData",
                         "outputs": [
                             {
-                                "internalType": "euint256",
+                                "internalType": "euint64",
                                 "name": "encryptedTraitRisk",
                                 "type": "uint256"
                             },
@@ -224,32 +255,13 @@ const Results = () => {
                         "type": "function"
                     },
                     {
-                        "inputs": [
-                            {
-                                "internalType": "euint256",
-                                "name": "multiplier",
-                                "type": "uint256"
-                            }
-                        ],
-                        "name": "processGeneticInsights",
-                        "outputs": [
-                            {
-                                "internalType": "euint256",
-                                "name": "encryptedAdjustedRisk",
-                                "type": "uint256"
-                            }
-                        ],
-                        "stateMutability": "nonpayable",
-                        "type": "function"
-                    },
-                    {
                         "inputs": [],
-                        "name": "virtu",
+                        "name": "testing",
                         "outputs": [
                             {
-                                "internalType": "uint256",
-                                "name": "value",
-                                "type": "uint256"
+                                "internalType": "uint64",
+                                "name": "",
+                                "type": "uint64"
                             }
                         ],
                         "stateMutability": "pure",
@@ -258,7 +270,7 @@ const Results = () => {
                 ];
 
                 console.log('Accounts:', accounts);
-                const signer = provider.getSigner();
+                const signer =await provider.getSigner();
                 const contract = new ethers.Contract(
                     contractAddress,
                     contractABI,

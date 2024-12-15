@@ -11,15 +11,31 @@ const UploadDNA = () => {
     const [{ wallet }] = useConnectWallet();
     const [file, setFile] = useState(null);
     console.log(import.meta.env.VITE_APP_ALLERGIC_GENE);
+    if(!window.ethereum){alert("Please install metamask extension to proceed further"); return;}
 
     const geneCombinations = {
         "AA": 1,           // this is just an example, feeling sleepy so given an example data
         "AB": 2,
         "BA": 3,
-        "BB": 4
+        "BB": 4,
+        "CC": 5,
+        "CG": 6,
+        "TT":7,
+
     };
     // process of accessing the key value pair
     console.log(geneCombinations["AA"]);
+    const init = async () => {
+        await initFhevm(); // Load TFHE
+        console.log("hello");
+        return createInstance({
+          kmsContractAddress: "0x904Af2B61068f686838bD6257E385C2cE7a09195",
+          aclContractAddress: "0x9479B455904dCccCf8Bc4f7dF8e9A1105cBa2A8e",
+          network: window.ethereum,
+          gatewayUrl: "https://gateway.zama.ai/",
+        });
+      };
+      
 
     const checkThrombophiliaRisk = (data) => {
         const thrombophiliaMarkers = {
@@ -59,13 +75,296 @@ const UploadDNA = () => {
                     console.error("Unable to read file content.");
                     return;
                 }
+                
                 const userAddress= wallet?.accounts[0].address || '';
-                const contractAddress="0x07E8bD80C228CF5812E20Bfe8223485c53B0BD44";
-                
-                console.log('User Address:', userAddress);
-                console.log('File content:', fileContent);
-                
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const accounts = await provider.send('eth_accounts', []);
+                const contractAddress ="0x6D89566417387ad0905E25436F36196B528F7001";
+                const contractABI=[
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "euint256",
+                                "name": "encryptedTraitRisk",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "ebool",
+                                "name": "encryptedIsCarrier",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "addGenomicData",
+                        "outputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "euint256",
+                                "name": "value1",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "euint256",
+                                "name": "value2",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "compareEncryptedValues",
+                        "outputs": [
+                            {
+                                "internalType": "ebool",
+                                "name": "isEqual",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "ebool",
+                                "name": "isGreater",
+                                "type": "uint256"
+                            }
+                        ],
+                        "stateMutability": "nonpayable",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "gene",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "encryptAndRegister",
+                        "outputs": [
+                            {
+                                "internalType": "euint256",
+                                "name": "encryptedGene",
+                                "type": "uint256"
+                            }
+                        ],
+                        "stateMutability": "nonpayable",
+                        "type": "function"
+                    },
+                    {
+                        "anonymous": false,
+                        "inputs": [
+                            {
+                                "indexed": true,
+                                "internalType": "address",
+                                "name": "sender",
+                                "type": "address"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "euint256",
+                                "name": "value1",
+                                "type": "uint256"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "euint256",
+                                "name": "value2",
+                                "type": "uint256"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "ebool",
+                                "name": "isEqual",
+                                "type": "uint256"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "ebool",
+                                "name": "isGreater",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "EncryptedValuesCompared",
+                        "type": "event"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "gene1",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "gene2",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "gene3",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "gene4",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "encryptGene",
+                        "outputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "function"
+                    },
+                    {
+                        "anonymous": false,
+                        "inputs": [
+                            {
+                                "indexed": true,
+                                "internalType": "address",
+                                "name": "user",
+                                "type": "address"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "euint256",
+                                "name": "encryptedRisk",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "GeneticInsightProcessed",
+                        "type": "event"
+                    },
+                    {
+                        "anonymous": false,
+                        "inputs": [
+                            {
+                                "indexed": true,
+                                "internalType": "address",
+                                "name": "user",
+                                "type": "address"
+                            }
+                        ],
+                        "name": "GenomicDataAdded",
+                        "type": "event"
+                    },
+                    {
+                        "anonymous": false,
+                        "inputs": [
+                            {
+                                "indexed": true,
+                                "internalType": "address",
+                                "name": "sender",
+                                "type": "address"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "uint256",
+                                "name": "plaintext",
+                                "type": "uint256"
+                            },
+                            {
+                                "indexed": false,
+                                "internalType": "euint256",
+                                "name": "encryptedValue",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "IntegerEncrypted",
+                        "type": "event"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "euint256",
+                                "name": "multiplier",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "processGeneticInsights",
+                        "outputs": [
+                            {
+                                "internalType": "euint256",
+                                "name": "encryptedAdjustedRisk",
+                                "type": "uint256"
+                            }
+                        ],
+                        "stateMutability": "nonpayable",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "encryptedGenes",
+                        "outputs": [
+                            {
+                                "internalType": "euint256",
+                                "name": "",
+                                "type": "uint256"
+                            }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [],
+                        "name": "get_genes",
+                        "outputs": [
+                            {
+                                "internalType": "euint256[4]",
+                                "name": "",
+                                "type": "uint256[4]"
+                            }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [],
+                        "name": "getGenomicData",
+                        "outputs": [
+                            {
+                                "internalType": "euint256",
+                                "name": "encryptedTraitRisk",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "ebool",
+                                "name": "encryptedIsCarrier",
+                                "type": "uint256"
+                            }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [],
+                        "name": "testing",
+                        "outputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "",
+                                "type": "uint256"
+                            }
+                        ],
+                        "stateMutability": "pure",
+                        "type": "function"
+                    }
+                ];
 
+                console.log('Accounts:', accounts);
+                const signer =await provider.getSigner();
+                const contract = new ethers.Contract(
+                    contractAddress,
+                    contractABI,
+                    provider
+                );
+                const Maincontract = new ethers.Contract(
+                    contractAddress,
+                    contractABI,
+                    signer
+                );
                 const lines = fileContent.trim().split('\n');
                 const dataLines = lines.filter(line => !line.startsWith('#'));
                 const genotypeData = {};
@@ -74,36 +373,27 @@ const UploadDNA = () => {
                     genotypeData[rsid] = genotype.trim();
                 });
 
-                const targetKeys = ["rs10811661", "rs1111875", "rs13266634", "rs1801282","rs1815739", "rs4402960", "rs5219", "rs6025","rs7754840", "rs7903146", "rs8050136", "rs9300039"];
+                const targetKeys = ["rs10811661", "rs1111875", "rs13266634", "rs1801282"];
                 console.log('Target keys:', targetKeys);
                 const ZamaData = {};
-                // const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-                // // Request account access if needed
-                // await provider.send("eth_requestAccounts", []);
-
-                // // Get signer from MetaMask
-                // const signer = provider.getSigner();
-
-                // // Create FHEVM instance
-                // const fhevmInstance = await createInstance(signer);
-                // const input = instance.createEncryptedInput(contractAddress, userAddress);
-
-                // targetKeys.forEach(key => {
-                //     input.add256(geneCombinations[genotypeData[key]]) 
-                // });
-                // const inputs=await input.encrpyt();
-                // targetKeys.forEach(key => {
-                //     ZamaData[key]=inputs.handles[0];
-                // });
-
-
-                
-
+                const genes=[];
+                targetKeys.forEach(key => {
+                    console.log(genotypeData[key]);
+                    genes.push(geneCombinations[genotypeData[key]]);
+                });
+                const tx=await Maincontract.encryptGene(genes[0],genes[1],genes[2],genes[3]);
+                await tx.wait();
+                const encryptedGene = await contract.get_genes();
+                console.log("Encrypted Gene Value:", encryptedGene);
+                let indx=0;
+                targetKeys.forEach(key => {
+                    ZamaData[key]=encryptedGene[0].toString();
+                    indx++;
+                });
                 const finalJson = {
-                    passport_id: "monadicdna_b65e442fcc0026ad8aeeb3ea6a779023_542916",
-                    filename_hash: "b65e442fcc0026ad8aeeb3ea6a779023",
-                    data_hash: "69f10259787f3305672bbedf52b7ddb4",
+                    passport_id: import.meta.env.VITE_APP_PASSWORD_ID,
+                    filename_hash: import.meta.env.VITE_APP_FILENAME_HASH,
+                    data_hash: import.meta.env.VITE_APP_DATA_HASH,
                     Zama_data: ZamaData
                 };
 
