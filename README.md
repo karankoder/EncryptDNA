@@ -16,11 +16,5 @@ As mentioned, we used **FHEVM** for confidential computing. As FHEVM is still be
 Click [here](https://www.loom.com/share/54b09e46543d4cf3b81b245e9f5d3186?sid=b49d1343-753c-4ad4-9fa4-2147cb774593) to see a working demo!
 
 ## Presentation Link
-Click [here]([https://www.loom.com/share/54b09e46543d4cf3b81b245e9f5d3186?sid=b49d1343-753c-4ad4-9fa4-2147cb774593](https://www.canva.com/design/DAGZWgTL90o/sUj0Kg-rF7b-Y_nomW6aVQ/edit?utm_content=DAGZWgTL90o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)) to see basic motivation behind our application and our Go-to-market strategy.
-
-
-To learn more about Request Network, take a look at the following resources:
-- [RequestNetwork Documentation](https://docs.request.network/) - learn about Request Network features.
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-
+Click [here](https://www.canva.com/design/DAGZWgTL90o/sUj0Kg-rF7b-Y_nomW6aVQ/edit?utm_content=DAGZWgTL90o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)to see basic motivation behind our application and our Go-to-market strategy.
 
