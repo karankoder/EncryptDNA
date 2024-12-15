@@ -17,7 +17,7 @@ The project uses actual dumps of genetic data from **23andMe**. Other providersâ
 As mentioned, we used **FHEVM** for confidential computing. As FHEVM is still being scaled, we kept things as simple as possible and only stored selected SNPs on the network for computation. The moment the constraint is removed, we will be able to run a plethora of programs on the secret data.
 
 ## Demo Video Link
-Click [here](loom.com/share/e72588920a51498ea3d93e2a1dd77cce?sid=170f410b-ef2e-4339-93e8-bc582c77cb9b) to see a working demo!
+Click [here](https://www.loom.com/share/e72588920a51498ea3d93e2a1dd77cce?sid=170f410b-ef2e-4339-93e8-bc582c77cb9b) to see a working demo!
 
 ## Presentation Link
 Click [here](https://www.canva.com/design/DAGZWgTL90o/sUj0Kg-rF7b-Y_nomW6aVQ/edit?utm_content=DAGZWgTL90o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)to see basic motivation behind our application and our Go-to-market strategy.
