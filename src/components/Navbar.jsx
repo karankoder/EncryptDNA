@@ -27,17 +27,14 @@ export default function Navbar() {
                 <img src={dna} alt='Encrypt DNA' className='h-10' />
             </div>
             <nav className='flex items-center space-x-4'>
-                <a href='#home' className='text-white hover:text-[#308ab2]'>
+                <a href='/' className='text-white '>
                     Home
                 </a>
-                <a href='#about' className='text-white hover:text-[#3A506B]'>
-                    About
+                <a href='/upload' className='text-white'>
+                    Upload DNA
                 </a>
-                <a href='#services' className='text-white hover:text-[#3A506B]'>
-                    Services
-                </a>
-                <a href='#contact' className='text-white hover:text-[#3A506B]'>
-                    Contact
+                <a href='/results' className='text-white'>
+                    Results
                 </a>
                 {/* <button className='bg-[#FF9F43] text-white py-2 px-4 rounded transition-transform transform  active:scale-95'>
                     Get Started
